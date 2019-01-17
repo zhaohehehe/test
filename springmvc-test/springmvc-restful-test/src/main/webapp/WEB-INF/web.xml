@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--参考：http://blog.csdn.net/fupengyao/article/details/50605954  -->
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<!-- 
+	1.容器对于web.xml的加载过程是context-param >> listener  >> filter  >> servlet
+
+ -->
+	<display-name>springmvc-restful-test</display-name>
+	
+	<context-param><!-- application范围内的参数，存放在servletcontext中 -->
+		<param-name>contextConfigLocation</param-name>
+		<param-value></param-value>
+	</context-param>
+	
+	<!-- DispatcherServlet 继承 HttpServlet,和Spring IOC 容器集成在一起 。 作用：分发request到控制器，需要通过配置URL映射告诉Spring 
+		IOC你希望被DispatcherServlet控制的请求有哪些。 -->
+	<servlet>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 初始化DispatcherServlet： 1.Spring默认寻找/WEB-INF/[servlet-name]-servlet.xml文件进行初始化； 
+			2.也可以设置一个空的contextConfigLocation参数进行初始化。 -->
+		<init-param><!-- Servlet范围内的参数，只能在servlet的init()方法中取得 -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/spring/spring-dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<!-- <url-pattern>/example/*</url-pattern> -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!--支持静态资源 -->
+	<!-- <servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.gif</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping> -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+</web-app>

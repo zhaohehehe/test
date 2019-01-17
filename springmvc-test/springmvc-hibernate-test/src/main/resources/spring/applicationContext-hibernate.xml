@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<context:annotation-config />
+	<!-- <context:component-scan base-package="com" /> -->
+	<bean id="userDaoImpl" class="com.zhaohe.study.springmvc.controller.dao.impl.UserDaoImpl"></bean>
+	<bean id="userServiceImpl" class="com.zhaohe.study.springmvc.controller.service.impl.UserServiceImpl"></bean>
+	<!-- jdbc数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<!-- 配置sessionFactory，采用配置文件方式 -->
+	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> 
+		<property name="configLocation"> <value>classpath:config/hibernate.cfg.xml</value> 
+		</property> <property name="packagesToScan"> <list> <value>com.entity</value> 
+		</list> </property> </bean> -->
+		
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<!-- hibernate.hbm2ddl.auto:自动创建|更新|验证数据库表结构。 如果不是此方面的需求建议set value="none". 
+					其它几个参数: validate 加载hibernate时，验证创建数据库表结构 ; create 每次加载hibernate，重新创建数据库表结构，这就是导致数据库表数据丢失的原因; 
+					create-drop 加载hibernate时创建，退出时删除表结构 ; update 加载hibernate自动更新数据库结构 ; -->
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hiberante.format_sql">true</prop>
+				<prop key="hibernate.connection.autocommit">true</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+			</props>
+		</property>
+		<!-- <property name="configLocations"> <list> <value>com/bonc/deployment/po/User.hbm.xml</value> 
+			</list> </property> -->
+			<!--  <property name="packagesToScan" value="com.zhaohe.study.springmvc.model" /> -->
+		<property name="mappingResources">
+			<list>
+				<value>com/zhaohe/study/springmvc/model/User.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+	<!-- 第二种配置事务的方式 ，代理 -->
+	<bean id="transactionBase" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true" abstract="true">  
+        <property name="transactionManager" ref="transactionManager"></property> 
+        <!-- 要在哪个Bean上面创建事务代理对象 -->
+        <property name="target" ref="userServiceImpl" />   
+ 		<!-- <property name="proxyInterfaces" value="com.zhaohe.study.springmvc.controller.dao.UserDao" /> -->
+ 		<!--  <property name="target" ref="userServiceImpl" />   
+ 		<property name="proxyInterfaces" value="com.zhaohe.study.springmvc.controller.service.UserService" /> -->
+        <property name="transactionAttributes">  
+            <props>  
+                <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>  
+                <prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>  
+                <prop key="insert*">PROPAGATION_REQUIRED,-Exception</prop>  
+                <prop key="modify*">PROPAGATION_REQUIRED,-Exception</prop>  
+                <prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>  
+                <prop key="get*">PROPAGATION_NEVER</prop>  
+                <prop key="*">PROPAGATION_REQUIRED, readOnly</prop>
+            </props>  
+        </property> 
+    </bean> 
+ 	<!-- <bean id="userService" parent="transactionBase">   
+ 		<property name="target" ref="userServiceImpl" />   
+ 	</bean> -->
+</beans>

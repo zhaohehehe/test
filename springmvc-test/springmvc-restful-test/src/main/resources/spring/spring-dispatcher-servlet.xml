@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"  
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 启动自动扫描该包下所有的Bean ,详细内容参见：http://www.cnblogs.com/leiOOlei/p/3713989.html-->
+	<context:component-scan base-package="com" />
+	<mvc:default-servlet-handler /><!--处理静态资源，实现REST风格 ，配置<url-pattern>/</url-pattern>-->
+    
+    <!-- spring 中有两种视图解析器： 1.InternalResourceViewResolver:不支持Excel; 2.XmlViewResolver:; -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- <property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" /> -->
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jpg" />
+	</bean>
+	<!-- <bean id="excelViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+		通过 order 属性来定义视图解析器的优先级, order 值越小优先级越高
+		<property name="order" value="1" />
+		<property name="location" value="classpath*:/spring/views.xml" />
+	</bean> -->
+	<!-- enable MVC :默认的,通过注解注册某些Bean registering a RequestMappingHandlerMapping, 
+		a RequestMappingHandlerAdapter, and an ExceptionHandlerExceptionResolver 
+		(among others) in support of processing requests with annotated controller 
+		methods using annotations such as @RequestMapping, @ExceptionHandler, and 
+		others. -->
+	<mvc:annotation-driven /><!-- 参见：http://www.cnblogs.com/cxyj/p/3909128.html -->
+
+
+</beans>

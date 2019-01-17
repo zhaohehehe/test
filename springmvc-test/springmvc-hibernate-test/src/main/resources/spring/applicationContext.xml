@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 将多个配置文件读取到容器中，交给Spring管理 -->
+	<context:component-scan base-package="com" />
+	<!-- <context:annotation-config /> -->
+	<!--如果需要使用PersistenceAnnotationBeanPostProcessor和RequiredAnnotationBeanPostProcessor的功能，可以保留annotation-config;否则可以删除  -->
+	<import resource="classpath:/spring/applicationContext-hibernate.xml"/>
+	<import resource="classpath:/spring/applicationContext-properties.xml"/>
+</beans>

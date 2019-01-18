@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>遗留问题</title>
+</head>
+<body>
+<h2>注解和xml文件的转换问题</h2>
+<p>
+hibernate-config.xml文件应该等同于com.workspace.spring.configuration.HibernateConfiguration类;
+spring-config.xml文件应该等同于com.workspace.spring.configuration.AppConfiguration类;
+但是删除com.workspace.spring.configuration，换为。xml配置文件时不能正确加载,抛出异常
+</p>
+</body>
+</html>

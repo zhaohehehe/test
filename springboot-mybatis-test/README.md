@@ -10,3 +10,9 @@
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		INSERT INTO `city` (`id`, `province_id`, `city_name`, `description`) VALUES ('12', '23', 'beijing', 'biewjing');
 	2.启动main函数访问controller即可。
+	
+PS：
+
+	该demo中整合了druid监控，如果不需要，可以注释掉DruidDataSourceConfig.java和
+	DruidMonitorConfig.java以及properties文件中的整合druid部分注释掉。
+	如果需要，则启动应用之后访问：http://127.0.0.1:8080/druid即可登录到druid监控。

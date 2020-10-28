@@ -2,6 +2,7 @@ package zhaohe.test.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import net.sf.json.JSONObject;
 import zhaohe.test.service.HelloService;
 import zhaohe.test.service.Person;
 
@@ -13,6 +14,13 @@ public class HelloServiceImpl implements HelloService {
 		System.out.println("=============================================");
 		System.out.println("=============================================");
 		return new Person(id, "test");
+	}
+
+	@Override
+	public JSONObject hi(Integer id) {
+		System.out.println("=============================================");
+		System.out.println("=============================================");
+		return new JSONObject().accumulate("id", id).accumulate("name", "hihihih");
 	}
 
 }

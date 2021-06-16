@@ -12,20 +12,27 @@
 		<dubbo:parameter key="qos.enable" value="false" />
 		<dubbo:parameter key="qos.accept.foreign.ip"
 			value="false" />
+		<!-- SPEL -->
+		<dubbo:parameter key="test.boundry.value" value="#{${test.boundry.value:200}/2}" />	
 	</dubbo:application>
 
 	<!-- NACOS VS ZOOKEEPER:https://dubbo.apache.org/en-us/docs/dev/impls/config-center.html -->
-	<dubbo:registry protocol="zookeeper"
+	<!-- 使用该配置需要在pom中添加zookeeper的依赖。 -->
+	<!-- <dubbo:registry protocol="zookeeper"
 		group="${spring.cloud.zookeeper.discovery.namespace}"
 		transporter="curator"
 		address="zookeeper://${spring.cloud.zookeeper.connect-string}"
 		username="${spring.cloud.zookeeper.username}"
-		password="${spring.cloud.zookeeper.password}" />
+		password="${spring.cloud.zookeeper.password}" /> -->
 
-	<!-- <dubbo:registry protocol="nacos" address="nacos://${spring.cloud.nacos.discovery.server-addr}" 
-		username="${spring.cloud.nacos.username}" password="${spring.cloud.nacos.password}"> 
-		NACOS DUBBO:https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html <dubbo:parameter 
-		key="namespace" value="${spring.cloud.nacos.discovery.namespace}" /> </dubbo:registry> -->
+	<dubbo:registry protocol="nacos"
+		address="nacos://${spring.cloud.nacos.discovery.server-addr}"
+		username="${spring.cloud.nacos.username}"
+		password="${spring.cloud.nacos.password}">
+		<!-- NACOS DUBBO:https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html -->
+		<dubbo:parameter key="namespace"
+			value="${spring.cloud.nacos.discovery.namespace}" />
+	</dubbo:registry>
 
 	<dubbo:protocol name="dubbo" port="${dubbo.port}" />
 
@@ -38,11 +45,15 @@
 		class="zhaohe.test.callback.service.NotifyImpl" />
 	<dubbo:reference id="helloService"
 		interface="zhaohe.test.service.HelloService" group="public"
-		version="1.0">
+		version="1.0" loadbalance="${test.loadbalance:random}" scope="remote">
 		<dubbo:method name="hello" async="true"
 			onreturn="demoCallback.onreturn" onthrow="demoCallback.onthrow" />
 		<!-- 上述配置中，hello方法为同步调用，因此事件通知方法的执行也是同步执行。可以配置 async=true让方法调用为异步，这时事件通知的方法也是异步执行的。 
 			特别强调一下，oninvoke方法不管是否异步调用，都是同步执行的 -->
 	</dubbo:reference>
+
+	<!--既是消费者，又是生产者 -->
+	<dubbo:service
+		interface="zhaohe.test.service.HelloService" ref="helloServiceImpl"></dubbo:service>
 
 </beans>

@@ -18,6 +18,7 @@
     <module>nacos-spring-cloud-rest-provider</module>
     <module>nacos-spring-cloud-rest-consumer</module>
     <module>nacos-spring-cloud-rest-provider-2</module>
+    <module>nacos-spring-cloud-provider-example2</module>
   </modules>
 
    

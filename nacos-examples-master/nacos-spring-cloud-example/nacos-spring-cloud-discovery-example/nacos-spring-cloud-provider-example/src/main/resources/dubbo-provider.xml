@@ -16,16 +16,22 @@
 	</dubbo:application>
 
 	<!-- NACOS VS ZOOKEEPER:https://dubbo.apache.org/en-us/docs/dev/impls/config-center.html -->
-	<dubbo:registry protocol="zookeeper"
+	<!-- 使用该配置需要在pom中添加zookeeper的依赖。 -->
+	<!-- <dubbo:registry protocol="zookeeper"
 		group="${spring.cloud.zookeeper.discovery.namespace}"
 		transporter="curator"
 		address="zookeeper://${spring.cloud.zookeeper.connect-string}"
 		username="${spring.cloud.zookeeper.username}"
-		password="${spring.cloud.zookeeper.password}" />
-	<!-- <dubbo:registry protocol="nacos" address="nacos://${spring.cloud.nacos.discovery.server-addr}" 
-		username="${spring.cloud.nacos.username}" password="${spring.cloud.nacos.password}"> 
-		NACOS DUBBO:https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html <dubbo:parameter 
-		key="namespace" value="${spring.cloud.nacos.discovery.namespace}" /> </dubbo:registry> -->
+		password="${spring.cloud.zookeeper.password}" /> -->
+
+	<dubbo:registry protocol="nacos"
+		address="nacos://${spring.cloud.nacos.discovery.server-addr}"
+		username="${spring.cloud.nacos.username}"
+		password="${spring.cloud.nacos.password}">
+		<!-- NACOS DUBBO:https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html -->
+		<dubbo:parameter key="namespace"
+			value="${spring.cloud.nacos.discovery.namespace}" />
+	</dubbo:registry>
 
 	<dubbo:protocol name="dubbo" port="${dubbo.port}" />
 

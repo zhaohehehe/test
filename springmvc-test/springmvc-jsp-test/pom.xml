@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<name>springmvc-jsp-test</name>
 	<properties>
-		<junit>4.12</junit>
+		<junit>4.13.1</junit>
 		<javax.servlet-api>3.1.0</javax.servlet-api>
 		<!-- hibernate -->
 		<!-- <hibernate-core>5.1.3.Final</hibernate-core>

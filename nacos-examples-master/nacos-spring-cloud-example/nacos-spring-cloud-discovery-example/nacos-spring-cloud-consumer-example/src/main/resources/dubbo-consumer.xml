@@ -37,7 +37,7 @@
 	<dubbo:protocol name="dubbo" port="${dubbo.port}" />
 
 	<!-- 如果一个应用中涉及跨namespace、group调用，请指定group和version -->
-	<dubbo:consumer timeout="60000" retries="0" />
+	<dubbo:consumer timeout="60000" retries="0" filter="testExceptionFilter"/>
 	<dubbo:provider timeout="60000" retries="0"
 		version="1.0" group="public" />
 
@@ -45,7 +45,7 @@
 		class="zhaohe.test.callback.service.NotifyImpl" />
 	<dubbo:reference id="helloService"
 		interface="zhaohe.test.service.HelloService" group="public"
-		version="1.0" loadbalance="${test.loadbalance:random}" scope="remote">
+		version="1.0" loadbalance="${test.loadbalance:random}" scope="remote" check="false">
 		<dubbo:method name="hello" async="true"
 			onreturn="demoCallback.onreturn" onthrow="demoCallback.onthrow" />
 		<!-- 上述配置中，hello方法为同步调用，因此事件通知方法的执行也是同步执行。可以配置 async=true让方法调用为异步，这时事件通知的方法也是异步执行的。 

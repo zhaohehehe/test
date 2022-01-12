@@ -15,7 +15,7 @@
     <properties>
         <spring-cloud-openfeign.version>2.0.0.RELEASE</spring-cloud-openfeign.version>
         <spring-cloud-netflix.version>2.0.0.RELEASE</spring-cloud-netflix.version>
-        <apache-dubbo.version>2.7.6</apache-dubbo.version>
+        <apache-dubbo.version>2.7.15</apache-dubbo.version>
     </properties>
 
     <dependencies>

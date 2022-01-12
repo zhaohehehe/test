@@ -11,7 +11,7 @@
 
 	<artifactId>nacos-spring-cloud-provider-example</artifactId>
 	<properties>
-		<apache-dubbo.version>2.7.6</apache-dubbo.version>
+		<apache-dubbo.version>2.7.15</apache-dubbo.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

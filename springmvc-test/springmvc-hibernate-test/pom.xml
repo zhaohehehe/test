@@ -11,7 +11,7 @@
 		<junit>4.12</junit>
 		<javax.servlet-api>3.1.0</javax.servlet-api>
 		<!-- hibernate -->
-		<hibernate-core>5.1.3.Final</hibernate-core>
+		<hibernate-core>5.3.20.Final</hibernate-core>
 		<jboss-logging>3.3.0.Final</jboss-logging>
 		<ojdbc6>11.2.0.3</ojdbc6>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
